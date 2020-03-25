@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Manage Parking</title>
+    <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
+    <link rel="stylesheet" href="../assets/css/shared/style.css">
+    <link rel="stylesheet" href="../assets/css/demo_1/style.css">
+  </head>
+
+  <body class="header-fixed admin">
+    <nav class="t-header">
+      <div class="t-header-brand-wrapper">
+        <a href="dashboard.html">
+          <img class="logo" src="../assets/images/logo.svg" alt="">
+          <img class="logo-mini" src="../assets/images/logo_mini.svg" alt="">
+        </a>
+      </div>
+      <div class="t-header-content-wrapper">
+        <div class="t-header-content">
+          <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none">
+            <i class="mdi mdi-menu"></i>
+          </button>
+          <ul class="nav ml-auto">
+            <li>
+              <a href="#" id="signOut">Sign out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="page-body">
+      <div class="sidebar">
+        <div class="user-profile">
+          <div class="display-avatar animated-avatar">
+            <img class="profile-img img-lg rounded-circle" src="../assets/images/admin.png" alt="profile image">
+          </div>
+          <div class="info-wrapper">
+            <p class="user-name" id="adminName"></p>
+          </div>
+        </div>
+        <ul class="navigation-menu">
+          <li class="nav-category-divider">NAVIGATION</li>
+          <li>
+            <a href="dashboard.html">
+              <span class="link-title">Dashboard</span>
+              <i class="mdi mdi-view-dashboard link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="manageparking.html">
+              <span class="link-title">Manage Parking</span>
+              <i class="mdi mdi-clipboard-outline link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="reservations.html">
+              <span class="link-title">Reservations</span>
+              <i class=" mdi mdi-book-open-page-variant link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="users.html">
+              <span class="link-title">Users</span>
+              <i class="mdi mdi-account-multiple link-icon"></i>
+            </a>
+          </li>
+          <li>
+            <a href="vehicles.html">
+              <span class="link-title">Vehicles</span>
+              <i class=" mdi mdi-car link-icon"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="page-content-wrapper">
+        <div class="page-content-wrapper-inner">
+          <div class="content-viewport">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-6 col-sm-12 col-12">
+                    <div class="section-block">
+                        <h3>Manage Parking</h3>
+                    </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-header bg-primary text-center p-3 ">
+                            <h4 class="mb-0 text-white"> NORMAL</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h1 class="mb-1" id="normalFee"></h1>
+                            <p>PER HOUR</p>
+                        </div>
+                        <div class="card-body border-top">
+                            <form action="#" id="formNormal" data-parsley-validate="">
+                                <div class="form-group">
+                                    <input id="txtNormalFee" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-center p-3">
+                            <h4 class="mb-0 text-white"> OVERTIME</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h1 class="mb-1" id="overtimeFee"></h1>
+                            <p>PER HOUR</p>
+                        </div>
+                        <div class="card-body border-top">
+                            <form action="#" id="formOvertime" data-parsley-validate="">
+                                <div class="form-group">
+                                    <input id="txtOvertimeFee" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-header bg-info text-center p-3">
+                            <h4 class="mb-0 text-white">EXPIRATION</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h1 class="mb-1" id="expirationFee"></h1>
+                        </div>
+                        <div class="card-body border-top">
+                            <form action="#" id="formExpiration" data-parsley-validate="">
+                                <div class="form-group">
+                                    <input id="txtExpirationFee" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                    <div class="card">
+                        <div class="card-header bg-primary text-center p-3">
+                            <h4 class="mb-0 text-white">Cancellation</h4>
+                        </div>
+                        <div class="card-body text-center">
+                            <h1 class="mb-1" id="cancellationFee"></h1>
+                        </div>
+                        <div class="card-body border-top">
+                            <form action="#" id="formCancellation" data-parsley-validate="">
+                                <div class="form-group">
+                                    <input id="txtCancellationFee" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
+                                </div>
+                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
+                            </form>
+                        </div>  
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-functions.js"></script>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyAGf4jKb1XPcO-jn3atw9wSOz62VelkmNg",
+        authDomain: "smart-parking-701f0.firebaseapp.com",
+        databaseURL: "https://smart-parking-701f0.firebaseio.com",
+        projectId: "smart-parking-701f0"
+      };
+      // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    
+      //make auth and firestore references
+      const auth = firebase.auth();
+      const db = firebase.firestore();
+      const functions = firebase.functions();
+    </script>
+
+    <script src="../assets/js/smartpark/authentication.js"></script>
+
+    <script src="../assets/vendors/js/core.js"></script>
+    <script src="../assets/vendors/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendors/chartjs/Chart.min.js"></script>
+    <script src="../assets/js/charts/chartjs.addon.js"></script>
+    <script src="../assets/js/template.js"></script>
+
+    <script src="../assets/js/smartpark/manageparking.js"></script>
+  </body>
+</html>
