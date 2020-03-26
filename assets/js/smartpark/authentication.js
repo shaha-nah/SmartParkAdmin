@@ -8,9 +8,7 @@ auth.onAuthStateChanged(user => {
     else{
         console.log(window.location.pathname);
 
-        if (window.location.pathname == "/smartpark/dashboard.html" || window.location.pathname == "/smartpark/managepricerates.html" || window.location.pathname == "/smartpark/manageusers.html" || window.location.pathname == "/smartpark/reservations.html"){
-        console.log("boo2");
-
+        if (window.location.pathname == "/smartpark/dashboard.html" || window.location.pathname == "/smartpark/manageparking.html" || window.location.pathname == "/smartpark/users.html" || window.location.pathname == "/smartpark/reservations.html" || window.location.pathname == "/smartpark/vehicles.html"){
             window.location.href = ('./login.html');
         }
     }
@@ -38,15 +36,14 @@ if(loginForm != null){
         const password = loginForm["txtPassword"].value;
 
         userDocument = db.collection("user").where("userEmail", "==", email).where("userRole", "==", "admin").get().then(snapshot => {
-            if (snapshot.empty){
-                console.log("User does not exist");
-                return;
-            }
-            else{
+            if (!snapshot.empty){
                 auth.signInWithEmailAndPassword(email, password).then(cred => {
                     console.log("Logged in");
                     window.location.href = ('./dashboard.html');
                 });
+            }
+            else{
+                alert("You are not an admin!");
             }
         }).catch(err => {
             console.log("Error getting document", err);
@@ -69,4 +66,26 @@ try{
 }
 catch(err){
     console.log("Error getting document", err);
+}
+
+const forgotPasswordForm = document.querySelector("#formForgotPassword");
+if(forgotPasswordForm != null){
+    
+    forgotPasswordForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        //get user info
+        const email = forgotPasswordForm["txtEmail"].value;
+        
+        db.collection("user").where("userEmail", "==", email).get().then(function(querySnapshot){
+            querySnapshot.forEach(function(doc){
+                if (doc.data().userRole != "admin"){
+                    alert("You are not an admin!");
+                }
+                else{
+                    auth.sendPasswordResetEmail(email);
+                    alert("Please check your inbox!");
+                }
+            });
+        });
+    });
 }

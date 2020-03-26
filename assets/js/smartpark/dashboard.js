@@ -18,17 +18,17 @@ catch(err){
 }
 
 //get total reservations
-async function getTotalReservations(){
+async function getTotalReservation(){
     var totalReservation = 0;
     await db.collection("reservation").get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
-            totalReservation = totalReservation + 1;
+            totalReservation++;
         });
     });
     document.getElementById("lblReservation").innerHTML = totalReservation;
 }
 try{
-    getTotalReservations();
+    getTotalReservation();
 }
 catch(err){
     console.log("Error getting document", err);
@@ -37,7 +37,7 @@ catch(err){
 //get total users
 async function getTotalUsers(){
     var totalUsers = 0;
-    await db.collection("user").get().then(function(querySnapshot){
+    await db.collection("user").where("userRole", "==", "normal").get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
             totalUsers = totalUsers + 1;
         });
@@ -212,10 +212,10 @@ $(async function () {
                 countParkingLotSize = countParkingLotSize +1;
             });
         });
-
+     
         document.getElementById("lblCarCount").innerHTML = countCar
 
-        var usage = (countCar/countParkingLotSize) * 100
+        var usage = parseInt((countCar/countParkingLotSize) * 100)
         a = {
             chart: {
                 height: 230,
@@ -276,7 +276,7 @@ $(async function () {
         var reservations = new Array();
 
         // parkingSlots = ["A1", "A2", "A3", "A4", "A5", "A5", "A6", "A7", "A8", "A9", "A10"];
-        await db.collection("parkingSlot").get().then(function(querySnapshot){
+        await db.collection("parkingSlot").where("parkingLotID", "==", "A").get().then(function(querySnapshot){
             querySnapshot.forEach(async function(doc){
                 parkingSlots.push(doc.id)
                 //get reservations
@@ -290,7 +290,6 @@ $(async function () {
             });
         });
 
-        console.log(reservations);
 
         var options = {
           type: 'line',
@@ -322,7 +321,49 @@ $(async function () {
     
         var ctx = document.getElementById('chartjs-staked-line-chart').getContext('2d');
         new Chart(ctx, options);
+    }
+
+    if ($("#chartjs-bar-chart").length) {
+
+        var parkingSlots = new Array();
+        var parkingBReservations = new Array();
+        
+
+        // // parkingSlots = ["A1", "A2", "A3", "A4", "A5", "A5", "A6", "A7", "A8", "A9", "A10"];
+        await db.collection("parkingSlot").where("parkingLotID", "==", "B").get().then(function(querySnapshot){
+            querySnapshot.forEach(async function(doc){
+                parkingSlots.push(doc.id)
+                //get reservations
+                var count = 0;
+                await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
+                    reservationSnapshot.forEach(function(doc){
+                        count = count + 1;
+                    });
+                });
+            });
+        });
+
+        console.log(parkingBReservations)
+        var BarData = {
+          labels: parkingSlots,
+          datasets: [{
+            label: '# of Reservations',
+            data: parkingBReservations,
+            backgroundColor: chartColors,
+            borderColor: chartColors,
+            borderWidth: 0
+          }]
+        };
+        var barChartCanvas = $("#chartjs-bar-chart").get(0).getContext("2d");
+        var barChart = new Chart(barChartCanvas, {
+          type: 'bar',
+          data: BarData,
+          options: {
+            legend: false
+          }
+        });
       }
+
     if ($("#cpu-performance").length) {
         var r, y = (r = document.getElementById("cpu-performance").getContext("2d")).createLinearGradient(0, 0, 0, 0);
         y.addColorStop(0, "rgba(255, 255, 225,0.5)"), y.addColorStop(1, "rgba(255, 255, 225,0.5)");

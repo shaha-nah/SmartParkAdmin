@@ -80,26 +80,28 @@ $(function () {
     new Chart(ctx, options);
   }
 
-  if ($("#chartjs-bar-chart").length) {
-    var BarData = {
-      labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
-      datasets: [{
-        label: '# of Votes',
-        data: [10, 19, 3, 5, 12, 3],
-        backgroundColor: chartColors,
-        borderColor: chartColors,
-        borderWidth: 0
-      }]
-    };
-    var barChartCanvas = $("#chartjs-bar-chart").get(0).getContext("2d");
-    var barChart = new Chart(barChartCanvas, {
-      type: 'bar',
-      data: BarData,
-      options: {
-        legend: false
-      }
-    });
-  }
+  
+
+  // if ($("#chartjs-bar-chart").length) {
+  //   var BarData = {
+  //     labels: ["2013", "2014", "2014", "2015", "2016", "2017"],
+  //     datasets: [{
+  //       label: '# of Votes',
+  //       data: [10, 19, 3, 5, 12, 3],
+  //       backgroundColor: chartColors,
+  //       borderColor: chartColors,
+  //       borderWidth: 0
+  //     }]
+  //   };
+  //   var barChartCanvas = $("#chartjs-bar-chart").get(0).getContext("2d");
+  //   var barChart = new Chart(barChartCanvas, {
+  //     type: 'bar',
+  //     data: BarData,
+  //     options: {
+  //       legend: false
+  //     }
+  //   });
+  // }
 
   if ($("#chartjs-staked-bar-chart").length) {
     var BarData = {
