@@ -40,10 +40,12 @@ if(loginForm != null){
                 auth.signInWithEmailAndPassword(email, password).then(cred => {
                     console.log("Logged in");
                     window.location.href = ('./dashboard.html');
+                }).catch(err =>{
+                    alert("Invalid Credentials")
                 });
             }
             else{
-                alert("You are not an admin!");
+                alert("Invalid Credentials");
             }
         }).catch(err => {
             console.log("Error getting document", err);

@@ -1,191 +1,222 @@
-//get parking lot ID
-async function getParkingLotID(){
-    var parkingLotID;
-    await db.collection("parkingLot").get().then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-            parkingLotID = doc.id;
-        })
+$(document).ready(async function(){
+    var select = document.getElementById("drpParkingLot");
+    await db.collection("parkingLot").get().then(snapshot =>{
+        snapshot.forEach(doc =>{
+            var option = document.createElement("option");
+            option.text=doc.id;
+            option.value=doc.id;
+            select.add(option)
+        });
     });
-    return parkingLotID;
-}
+});
 
-async function getFees(){
-    await db.collection("parkingLot").get().then(function(querySnapshot){
-        querySnapshot.forEach(function(doc){
-            if (doc.data().reserve == true){
-                document.getElementById("normalFeeA").innerHTML = "Rs " + doc.data().parkingLotNormalRate.toString();
-                document.getElementById("overtimeFeeA").innerHTML = "Rs " + doc.data().parkingLotLateFee.toString();
-                document.getElementById("expirationFeeA").innerHTML = "Rs " + doc.data().parkingLotExpirationFee.toString();
-                document.getElementById("cancellationFeeA").innerHTML = "Rs " + doc.data().parkingLotCancellationFee.toString();
-            }
-            else{
-                document.getElementById("normalFeeB").innerHTML = "Rs " + doc.data().parkingLotNormalRate.toString();
-                document.getElementById("overtimeFeeB").innerHTML = "Rs " + doc.data().parkingLotLateFee.toString();
-            }
-        })
+$("select").change(async function(){
+    var parkingLot = $(this).children("option:selected").val();
+    await db.collection("parkingLot").doc(parkingLot).get().then(doc =>{
+        $("#txtNormal").val(doc.data().parkingLotNormalRate);
+        $("#txtLate").val(doc.data().parkingLotLateFee);
+        $("#txtPenalty").val(doc.data().parkingLotPenaltyFee);
+        $("#txtCancellation").val(doc.data().parkingLotCancellationFee);
+        $("#txtExpiration").val(doc.data().parkingLotExpirationFee);
+        if (doc.data().reserve == false){
+            $("#txtCancellation").prop("disabled", true);
+            $("#txtExpiration").prop("disabled", true);
+        }
+        else{
+            $("#txtCancellation").prop("disabled", false);
+            $("#txtExpiration").prop("disabled", false);
+        }
     });
-}
+});
 
-try{
-    getFees();
-}
-catch(err){
-    console.log("Error gettting document", err);
-}
-
-$(function(){
-    $("#formNormalA").submit(async function(e){
-        e.preventDefault();
-        var normalFee = parseInt($("#txtNormalFeeA").val());
-        await db.collection("parkingLot").get().then(function(querySnapshot){
-            querySnapshot.forEach(async function(doc){
-                var parkingLotID = doc.id;
+$("#formPrice").submit(async function(e){
+    e.preventDefault();
+    var parkingLot = $("select").children("option:selected").val();
+    console.log(parkingLot);
+    await db.collection("parkingLot").doc(parkingLot).get().then(async function(doc){
+        if (doc.data().reserve == true){
+            await db.collection("parkingLot").doc(parkingLot).set({
+                parkingLotNormalRate: parseInt($("#txtNormal").val()),
+                parkingLotLateFee: parseInt($("#txtLate").val()),
+                parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
+                parkingLotCancellationFee: parseInt($("#txtCancellation").val()),
+                parkingLotExpirationFee: parseInt($("#txtExpiration").val())
+            },
+            {
+                merge: true
+            }).then(f =>{
+                location.reload(true);
+            }).catch(err => {
+                console.log(err)
+            });
+        }
+        else{
+            await db.collection("parkingLot").doc(parkingLot).set({
+                parkingLotNormalRate: parseInt($("#txtNormal").val()),
+                parkingLotLateFee: parseInt($("#txtLate").val()),
+                parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
+            },
+            {
+                merge: true
+            }).then(f =>{
+                location.reload(true);
+            }).catch(err => {
+                console.log(err)
+            });
+        }
+    });
+});
+// $(function(){
+//     $("#formNormalA").submit(async function(e){
+//         e.preventDefault();
+//         var normalFee = parseInt($("#txtNormalFeeA").val());
+//         if (normalFee > 0){
+//             await db.collection("parkingLot").doc("A").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
                 
-                await db.collection("parkingLot").doc(parkingLotID).set({
-                    parkingLotNormalRate: normalFee
-                },
-                {
-                    merge: true
-                }).then(f =>{
-                    location.reload(true);
-                }).catch(err => {
-                    console.log(err)
-                });
-            });
-        });
-        
-    });
-});
-
-$(function(){
-    $("#formOvertimeA").submit(async function(e){
-        e.preventDefault();
-        var overtimeFee = parseInt($("#txtOvertimeFeeA").val());
-        await db.collection("parkingLot").get().then(function(querySnapshot){
-            querySnapshot.forEach(async function(doc){
-                var parkingLotID = doc.id;
-
-                await db.collection("parkingLot").doc(parkingLotID).set({
-                    parkingLotLateFee: overtimeFee
-                },
-                {
-                    merge: true
-                }).then(f =>{
-                    location.reload(true);
-                }).catch(err =>{
-                    console.log(err);
-                });
-            });
-        });
-    });
-});
-
-$(function(){
-    $("#formExpirationA").submit(async function(e){
-        e.preventDefault();
-        var expirationFee = parseInt($("#txtExpirationFeeA").val());
-        await db.collection("parkingLot").get().then(function(querySnapshot){
-            querySnapshot.forEach(async function(doc){
-                var parkingLotID = doc.id;
-                await db.collection("parkingLot").doc(parkingLotID).set({
-                    parkingLotExpirationFee: expirationFee
-                },
-                {
-                    merge:true
-                }).then(f => {
-                    location.reload(true);
-                }).catch(err => {
-                    console.log(err);
-                });
-            });
-        });
-    });
-}); 
-
-$(function(){
-    $("#formCancellationA").submit(async function(e){
-        e.preventDefault();
-        var expirationFee = parseInt($("#txtCancellationFeeA").val());
-        await db.collection("parkingLot").get().then(function(querySnapshot){
-            querySnapshot.forEach(async function(doc){
-                var parkingLotID = doc.id;
-                await db.collection("parkingLot").doc(parkingLotID).set({
-                    parkingLotCancellationFee: expirationFee
-                },
-                {
-                    merge:true
-                }).then(f => {
-                    location.reload(true);
-                }).catch(err => {
-                    console.log(err);
-                });
-            });
-        });
-    });
-}); 
-
-
-// async function getParkingLots(){
-//     var table = $("#example");
-
-//     await db.collection("parkingLot").get().then(snapshot =>{
-//         snapshot.forEach(async function(parkingLot){
-//             var parkingLotID = parkingLot.id;
-
-//             var numSlots = 0;
-//             await db.collection("parkingSlot").where("parkingLotID", "==", parkingLotID).get().then(function(parkingSlot){
-//                 parkingSlot.forEach(function(doc){
-//                     numSlots++;
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotNormalRate: normalFee
+//                 },
+//                 {
+//                     merge: true
+//                 }).then(f =>{
+//                     location.reload(true);
+//                 }).catch(err => {
+//                     console.log(err)
 //                 });
 //             });
-//             if (parkingLot.data().reserve == true){
-//                 table.row.add(
-//                     [
-//                         parkingLot.id,
-//                         numSlots,
-//                         parkingLot.data().parkingLotNormalRate,
-//                         parkingLot.data().parkingLotLateFee,
-//                         parkingLot.data().parkingLotCancellationFee,
-//                         parkingLot.data().parkingLotExpirationFee
-//                     ]
-//                 ).draw(false);
-//             }
-//             else{
-//                 table.row.add(
-//                     [
-//                         parkingLot.id,
-//                         numSlots,
-//                         parkingLot.data().parkingLotNormalRate,
-//                         parkingLot.data().parkingLotLateFee,
-//                         "",
-//                         ""
-//                     ]
-//                 ).draw(false);
-//             }
-//         });
-
-//         var table = $('#example').DataTable({
-//             paging: true,
-//             searching: true,
-//             columns: [
-//                 {title: "Parking Lot"}, 
-//                 {title: "Number of Slots"}, 
-//                 {title: "Normal Fee"},
-//                 {title: "Late Fee"},
-//                 {title: "Cancellation Fee"},
-//                 {title: "Expiration Fee"},
-//             ],
-//             buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
-//             lengthChange: false
-//         });
-//         table.buttons().container()
-//             .appendTo('#example_wrapper .col-md-6:eq(0)');
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
 //     });
-// }
+// });
 
-// try{
-//     getParkingLots();
-// }
-// catch(err){
-//     console.log("Erorr getting document: ", err);
-// }
+// $(function(){
+//     $("#formOvertimeA").submit(async function(e){
+//         e.preventDefault();
+//         var overtimeFee = parseInt($("#txtOvertimeFeeA").val());
+//         if (overtimeFee > 0){
+//             await db.collection("parkingLot").doc("A").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
+
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotLateFee: overtimeFee
+//                 },
+//                 {
+//                     merge: true
+//                 }).then(f =>{
+//                     location.reload(true);
+//                 }).catch(err =>{
+//                     console.log(err);
+//                 });
+               
+//             });
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
+//     });
+// });
+
+// $(function(){
+//     $("#formExpirationA").submit(async function(e){
+//         e.preventDefault();
+//         var expirationFee = parseInt($("#txtExpirationFeeA").val());
+//         if (expirationFee > 0){
+//             await db.collection("parkingLot").doc("A").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotExpirationFee: expirationFee
+//                 },
+//                 {
+//                     merge:true
+//                 }).then(f => {
+//                     location.reload(true);
+//                 }).catch(err => {
+//                     console.log(err);
+//                 });
+//             });
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
+//     });
+// }); 
+
+// $(function(){
+//     $("#formCancellationA").submit(async function(e){
+//         e.preventDefault();
+//         var expirationFee = parseInt($("#txtCancellationFeeA").val());
+//         if (expirationFee > 0){
+//             await db.collection("parkingLot").doc("A").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotCancellationFee: expirationFee
+//                 },
+//                 {
+//                     merge:true
+//                 }).then(f => {
+//                     location.reload(true);
+//                 }).catch(err => {
+//                     console.log(err);
+//                 });
+//             });
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
+//     });
+// }); 
+
+// $(function(){
+//     $("#formNormalB").submit(async function(e){
+//         e.preventDefault();
+//         var normalFee = parseInt($("#txtNormalFeeB").val());
+//         if (normalFee > 0){
+//             await db.collection("parkingLot").doc("B").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
+                
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotNormalRate: normalFee
+//                 },
+//                 {
+//                     merge: true
+//                 }).then(f =>{
+//                     location.reload(true);
+//                 }).catch(err => {
+//                     console.log(err)
+//                 });
+//             });
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
+//     });
+// });
+
+// $(function(){
+//     $("#formOvertimeB").submit(async function(e){
+//         e.preventDefault();
+//         var overtimeFee = parseInt($("#txtOvertimeFeeB").val());
+//         if (overtimeFee > 0){
+//             await db.collection("parkingLot").doc("B").get().then(async function(doc){
+//                 var parkingLotID = doc.id;
+
+//                 await db.collection("parkingLot").doc(parkingLotID).set({
+//                     parkingLotLateFee: overtimeFee
+//                 },
+//                 {
+//                     merge: true
+//                 }).then(f =>{
+//                     location.reload(true);
+//                 }).catch(err =>{
+//                     console.log(err);
+//                 });
+//             });
+//         }
+//         else{
+//             alert("Could not update rate!");
+//         }
+//     });
+// });

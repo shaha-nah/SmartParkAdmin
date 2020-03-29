@@ -14,7 +14,8 @@ async function getAllReservation() {
                         documentReservation.data().vehicleID,
                         documentReservation.data().reservationDate.toDate().toDateString(),
                         documentReservation.data().reservationStartTime.toDate().toLocaleTimeString(),
-                        documentReservation.data().reservationEndTime.toDate().toLocaleTimeString()
+                        documentReservation.data().reservationEndTime.toDate().toLocaleTimeString(),
+                        documentReservation.data().parkingSlotID
                     ]
                 ).draw(false);
             });
@@ -29,7 +30,8 @@ async function getAllReservation() {
                 {title: "Vehicle"},
                 {title: "Date"},
                 {title: "Start Time"},
-                {title: "End Time"}
+                {title: "End Time"},
+                {title: "Slot"}
             ],
             buttons: ['copy', 'excel', 'pdf', 'print', 'colvis'],
             lengthChange: false

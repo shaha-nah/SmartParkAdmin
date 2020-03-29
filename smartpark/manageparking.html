@@ -3,13 +3,30 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manage Parking</title>
+    <title>Reservations</title>
     <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
     <link rel="stylesheet" href="../assets/css/shared/style.css">
     <link rel="stylesheet" href="../assets/css/demo_1/style.css">
+    <link rel="stylesheet" href="../jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css">
+
+    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
+        <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="../assets/libs/css/style.css">
+        <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+ 
   </head>
 
   <body class="header-fixed admin">
+    <script type="text/javascript">
+      (function() {
+        var proxied = window.alert;
+        window.alert = function() {
+          modal = $('<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-body"><p>Modal body text goes here.</p></div><div class="modal-footer"><button type="button" class="btn btn-primary" id="btnDismiss" data-dismiss="modal">OK</button></div></div></div></div>');
+          modal.find(".modal-body").text(arguments[0]);
+          // modal.modal('show');
+        };
+      })();
+    </script>
     <nav class="t-header">
       <div class="t-header-brand-wrapper">
         <a href="dashboard.html">
@@ -89,296 +106,76 @@
           <div class="content-viewport">
             <div class="row">
               <div class="col-12 py-5">
-                <h4>Manage Parking</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-12 py-5">
-                <h4>LOT A</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                  <div class="card">
-                      <div class="card-header bg-primary text-center p-3 ">
-                          <h4 class="mb-0 text-white"> NORMAL</h4>
-                      </div>
-                      <div class="card-body text-center">
-                          <h1 class="mb-1" id="normalFeeA"></h1>
-                          <p>PER HOUR</p>
-                      </div>
-                      <div class="card-body border-top">
-                          <form action="#" id="formNormalA" data-parsley-validate="">
-                              <div class="form-group">
-                                  <input id="txtNormalFeeA" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                              </div>
-                              <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                          </form>
-                      </div>  
-                  </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                  <div class="card">
-                      <div class="card-header bg-info text-center p-3">
-                          <h4 class="mb-0 text-white"> OVERTIME</h4>
-                      </div>
-                      <div class="card-body text-center">
-                          <h1 class="mb-1" id="overtimeFeeA"></h1>
-                          <p>PER HOUR</p>
-                      </div>
-                      <div class="card-body border-top">
-                          <form action="#" id="formOvertimeA" data-parsley-validate="">
-                              <div class="form-group">
-                                  <input id="txtOvertimeFeeA" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                              </div>
-                              <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                          </form>
-                      </div>  
-                  </div>
-              </div>
-            </div>
-            <div class="row">
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="card">
-                        <div class="card-header bg-info text-center p-3">
-                            <h4 class="mb-0 text-white">EXPIRATION</h4>
-                        </div>
-                        <div class="card-body text-center">
-                            <h1 class="mb-1" id="expirationFeeA"></h1>
-                        </div>
-                        <div class="card-body border-top">
-                            <form action="#" id="formExpirationA" data-parsley-validate="">
-                                <div class="form-group">
-                                    <input id="txtExpirationFeeA" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                            </form>
-                        </div>  
-                    </div>
-                </div>
-                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                    <div class="card">
-                        <div class="card-header bg-primary text-center p-3">
-                            <h4 class="mb-0 text-white">Cancellation</h4>
-                        </div>
-                        <div class="card-body text-center">
-                            <h1 class="mb-1" id="cancellationFeeA"></h1>
-                        </div>
-                        <div class="card-body border-top">
-                            <form action="#" id="formCancellationA" data-parsley-validate="">
-                                <div class="form-group">
-                                    <input id="txtCancellationFeeA" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                                </div>
-                                <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                            </form>
-                        </div>  
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-              <div class="col-12 py-5">
-                <h4>LOT B</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                  <div class="card">
-                      <div class="card-header bg-primary text-center p-3 ">
-                          <h4 class="mb-0 text-white"> NORMAL</h4>
-                      </div>
-                      <div class="card-body text-center">
-                          <h1 class="mb-1" id="normalFeeB"></h1>
-                          <p>PER HOUR</p>
-                      </div>
-                      <div class="card-body border-top">
-                          <form action="#" id="formNormalB" data-parsley-validate="">
-                              <div class="form-group">
-                                  <input id="txtNormalFeeB" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                              </div>
-                              <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                          </form>
-                      </div>  
-                  </div>
-              </div>
-              <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                  <div class="card">
-                      <div class="card-header bg-info text-center p-3">
-                          <h4 class="mb-0 text-white"> OVERTIME</h4>
-                      </div>
-                      <div class="card-body text-center">
-                          <h1 class="mb-1" id="overtimeFeeB"></h1>
-                          <p>PER HOUR</p>
-                      </div>
-                      <div class="card-body border-top">
-                          <form action="#" id="formOvertimeB" data-parsley-validate="">
-                              <div class="form-group">
-                                  <input id="txtOvertimeFeeB" type="text" name="name" data-parsley-trigger="change" required="" placeholder="New Rate" autocomplete="off" class="form-control">
-                              </div>
-                              <button type="submit" class="btn btn-block btn-lg btn-outline-secondary">Submit</button>
-                          </form>
-                      </div>  
-                  </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    </div>
-    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-functions.js"></script>
-
-    <script>
-      var firebaseConfig = {
-        apiKey: "AIzaSyAGf4jKb1XPcO-jn3atw9wSOz62VelkmNg",
-        authDomain: "smart-parking-701f0.firebaseapp.com",
-        databaseURL: "https://smart-parking-701f0.firebaseio.com",
-        projectId: "smart-parking-701f0"
-      };
-      // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    
-      //make auth and firestore references
-      const auth = firebase.auth();
-      const db = firebase.firestore();
-      const functions = firebase.functions();
-    </script>
-
-    <script src="../assets/js/smartpark/authentication.js"></script>
-
-    <script src="../assets/vendors/js/core.js"></script>
-    <script src="../assets/vendors/apexcharts/apexcharts.min.js"></script>
-    <script src="../assets/vendors/chartjs/Chart.min.js"></script>
-    <script src="../assets/js/charts/chartjs.addon.js"></script>
-    <script src="../assets/js/template.js"></script>
-
-    <script src="../assets/js/smartpark/manageparking.js"></script>
-  </body>
-</html>
-<!-- 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Reservations</title>
-    <link rel="stylesheet" href="../assets/vendors/iconfonts/mdi/css/materialdesignicons.css">
-    <link rel="stylesheet" href="../assets/css/shared/style.css">
-    <link rel="stylesheet" href="../assets/css/demo_1/style.css">
-    <link rel="stylesheet" href="../jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css">
-
-    <link rel="stylesheet" href="../assets/vendor/bootstrap/css/bootstrap.min.css">
-        <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
-        <link rel="stylesheet" href="../assets/libs/css/style.css">
-        <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
-        <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/dataTables.bootstrap4.css">
-        <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/buttons.bootstrap4.css">
-        <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/select.bootstrap4.css">
-        <link rel="stylesheet" type="text/css" href="../assets/vendor/datatables/css/fixedHeader.bootstrap4.css">
-    <script>
-        $(document).ready(function(){
-            $("#example").DataTable();
-        });
-    </script>
-  </head>
-
-  <body class="header-fixed admin">
-    <nav class="t-header">
-      <div class="t-header-brand-wrapper">
-        <a href="dashboard.html">
-          <img class="logo" src="../assets/images/logo.svg" alt="">
-          <img class="logo-mini" src="../assets/images/logo_mini.svg" alt="">
-        </a>
-      </div>
-      <div class="t-header-content-wrapper">
-        <div class="t-header-content">
-          <button class="t-header-toggler t-header-mobile-toggler d-block d-lg-none">
-            <i class="mdi mdi-menu"></i>
-          </button>
-          <ul class="nav ml-auto">
-            <li>
-              <a href="#" id="signOut">Sign out</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="page-body">
-      <div class="sidebar">
-        <div class="user-profile">
-          <div class="display-avatar animated-avatar">
-            <img class="profile-img img-lg rounded-circle" src="../assets/images/admin.png" alt="profile image">
-          </div>
-          <div class="info-wrapper">
-            <p class="user-name" id="adminName"></p>
-          </div>
-        </div>
-        <ul class="navigation-menu">
-          <li class="nav-category-divider">NAVIGATION</li>
-          <li>
-            <a href="dashboard.html">
-              <span class="link-title">Dashboard</span>
-              <i class="mdi mdi-view-dashboard link-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="manageparking.html">
-              <span class="link-title">Manage Parking</span>
-              <i class="mdi mdi-clipboard-outline link-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="reservations.html">
-              <span class="link-title">Reservations</span>
-              <i class=" mdi mdi-book-open-page-variant link-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="users.html">
-              <span class="link-title">Users</span>
-              <i class="mdi mdi-account-multiple link-icon"></i>
-            </a>
-          </li>
-          <li>
-            <a href="vehicles.html">
-              <span class="link-title">Vehicles</span>
-              <i class=" mdi mdi-car link-icon"></i>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="page-content-wrapper">
-        <div class="page-content-wrapper-inner">
-          <div class="content-viewport">
-            <div class="row">
-              <div class="col-12 py-5">
-                <h4>Reservations</h4>
+                
               </div>
             </div>
             <div class="row">
               <div class="container-fluid">
-                  <!-- Exportable Table -->
-                  <div class="row clearfix">
-                      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div class="card">
-                              </div>
-                              <div class="body">
-                                  <div class="table-responsive">
-                                      <table id="example" class="table table-striped table-bordered" style="width:100%"></table>
-                                  </div>
-                              </div>
-                          </div>
+                <div class="row clearfix">
+                  <div class="col-lg-3 col-md-6"></div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <h4>Manage Parking</h4>
+                    <form id="formPrice">
+                      <div class="row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label>Parking Lot</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <select class="custom-select" id="drpParkingLot">
+                            <option selected>Choose a Parking Lot</option>
+                          </select>
+                        </div>
                       </div>
+                      <div class="form-group row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label for="txtNormal">Normal Rate</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <input type="number" min="0" class="form-control" id="txtNormal">
+                        </div>
+                      </div>
+                      <div class="form-group row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label for="txtLate">Late Fee</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <input type="number" min="0" class="form-control" id="txtLate">
+                        </div>
+                      </div>
+                      <div class="form-group row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label for="txtPenalty">Penalty Fee</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <input type="number" min="0" class="form-control" id="txtPenalty"> </div>
+                      </div>
+                      <div class="form-group row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label for="txtCancellation">Cancellation Fee</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <input type="number" min="0" class="form-control" id="txtCancellation">
+                        </div>
+                      </div>
+                      <div class="form-group row showcase_row_area">
+                        <div class="col-md-3 showcase_text_area">
+                          <label for="txtExpiration">Expiration Fee</label>
+                        </div>
+                        <div class="col-md-9 showcase_content_area">
+                          <input type="text" min="0" class="form-control" id="txtExpiration">
+                        </div>
+                      </div>
+                      <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                    </form>
                   </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    </div>
+    
     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-firestore.js"></script>
@@ -452,4 +249,4 @@
         <script src="../assets/js/smartpark/authentication.js"></script>
         <script src="../assets/js/smartpark/manageparking.js"></script>
   </body>
-</html> -->
+</html>
