@@ -23,7 +23,7 @@
         window.alert = function() {
           modal = $('<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-body"><p>Modal body text goes here.</p></div><div class="modal-footer"><button type="button" class="btn btn-primary" id="btnDismiss" data-dismiss="modal">OK</button></div></div></div></div>');
           modal.find(".modal-body").text(arguments[0]);
-          // modal.modal('show');
+          modal.modal('show');
         };
       })();
     </script>

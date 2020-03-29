@@ -20,16 +20,11 @@ async function getAllUsers(){
                 [
                     doc.data().userName,
                     doc.data().userEmail,
-                    // doc.data().userPhoneNumber,
+                    doc.data().userPhoneNumber,
                     countVehicle,
                     countReservation
                 ]
             ).draw(false);
-            console.log(doc.data().userName);
-            console.log(doc.data().userEmail);
-            console.log(doc.data().userPhoneNumber);
-            console.log(countVehicle);
-            console.log(countReservation);
 
         });
         var table = $("#example").DataTable({
@@ -38,7 +33,7 @@ async function getAllUsers(){
             columns: [
                 {title: "Name"},
                 {title: "Email"},
-                // {title: "Phone Number"},
+                {title: "Phone Number"},
                 {title: "Vehicles Owned"},
                 {title: "Reservations Made"}
             ],

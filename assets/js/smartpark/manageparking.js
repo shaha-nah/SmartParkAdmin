@@ -32,39 +32,48 @@ $("select").change(async function(){
 $("#formPrice").submit(async function(e){
     e.preventDefault();
     var parkingLot = $("select").children("option:selected").val();
-    console.log(parkingLot);
-    await db.collection("parkingLot").doc(parkingLot).get().then(async function(doc){
-        if (doc.data().reserve == true){
-            await db.collection("parkingLot").doc(parkingLot).set({
-                parkingLotNormalRate: parseInt($("#txtNormal").val()),
-                parkingLotLateFee: parseInt($("#txtLate").val()),
-                parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
-                parkingLotCancellationFee: parseInt($("#txtCancellation").val()),
-                parkingLotExpirationFee: parseInt($("#txtExpiration").val())
-            },
-            {
-                merge: true
-            }).then(f =>{
-                location.reload(true);
-            }).catch(err => {
-                console.log(err)
-            });
-        }
-        else{
-            await db.collection("parkingLot").doc(parkingLot).set({
-                parkingLotNormalRate: parseInt($("#txtNormal").val()),
-                parkingLotLateFee: parseInt($("#txtLate").val()),
-                parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
-            },
-            {
-                merge: true
-            }).then(f =>{
-                location.reload(true);
-            }).catch(err => {
-                console.log(err)
-            });
-        }
-    });
+    if (parkingLot == "Choose a Parking Lot"){
+        alert("Please choose a parking lot");
+    }
+    else{
+        await db.collection("parkingLot").doc(parkingLot).get().then(async function(doc){
+            if (doc.data().reserve == true){
+                if (parseInt($("#txtNormal").val()) > 0 && parseInt($("#txtLate").val()) > 0 && parseInt($("#txtPenalty").val()) > 0 && parseInt($("#txtCancellation").val()) > 0 && parseInt($("#txtExpiration").val()) > 0 ){
+                    await db.collection("parkingLot").doc(parkingLot).set({
+                        parkingLotNormalRate: parseInt($("#txtNormal").val()),
+                        parkingLotLateFee: parseInt($("#txtLate").val()),
+                        parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
+                        parkingLotCancellationFee: parseInt($("#txtCancellation").val()),
+                        parkingLotExpirationFee: parseInt($("#txtExpiration").val())
+                    },
+                    {
+                        merge: true
+                    }).then(f =>{
+                        location.reload(true);
+                    }).catch(err => {
+                        console.log(err)
+                    });
+                }
+                else{
+                    alert("Please do not leave any field blank!")
+                }
+            }
+            else{
+                await db.collection("parkingLot").doc(parkingLot).set({
+                    parkingLotNormalRate: parseInt($("#txtNormal").val()),
+                    parkingLotLateFee: parseInt($("#txtLate").val()),
+                    parkingLotPenaltyFee: parseInt($("#txtPenalty").val()),
+                },
+                {
+                    merge: true
+                }).then(f =>{
+                    location.reload(true);
+                }).catch(err => {
+                    console.log(err)
+                });
+            }
+        });
+    }
 });
 // $(function(){
 //     $("#formNormalA").submit(async function(e){
