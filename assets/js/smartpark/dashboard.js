@@ -274,8 +274,8 @@ $(async function () {
     if ($("#chartjs-staked-line-chart").length) {
         var parkingSlots = new Array();
         var reservations = new Array();
-
-        // parkingSlots = ["A1", "A2", "A3", "A4", "A5", "A5", "A6", "A7", "A8", "A9", "A10"];
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth();
         await db.collection("parkingSlot").where("parkingLotID", "==", "A").get().then(function(querySnapshot){
             querySnapshot.forEach(async function(doc){
                 parkingSlots.push(doc.id)
@@ -283,7 +283,10 @@ $(async function () {
                 var count = 0;
                 await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
                     reservationSnapshot.forEach(function(doc){
-                        count = count + 1;
+                        var reservationDate = doc.data().reservationDate.toDate();
+                        if (reservationDate.getMonth() == currentMonth){
+                            count = count + 1;
+                        }
                     });
                 });
                 reservations.push(count);
@@ -328,6 +331,8 @@ $(async function () {
         var parkingSlots = new Array();
         var parkingBReservations = new Array();
         
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth();
 
         // // parkingSlots = ["A1", "A2", "A3", "A4", "A5", "A5", "A6", "A7", "A8", "A9", "A10"];
         await db.collection("parkingSlot").where("parkingLotID", "==", "B").get().then(function(querySnapshot){
@@ -337,7 +342,10 @@ $(async function () {
                 var count = 0;
                 await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
                     reservationSnapshot.forEach(function(doc){
-                        count = count + 1;
+                        var reservationDate = doc.data().reservationDate.toDate();
+                        if (reservationDate.getMonth() == currentMonth){
+                            count = count + 1;
+                        }
                     });
                 });
             });
