@@ -1,0 +1,113 @@
+[debug] [2020-04-07T18:15:47.834Z] ----------------------------------------------------------------------
+[debug] [2020-04-07T18:15:47.836Z] Command:       /usr/bin/node /usr/bin/firebase serve
+[debug] [2020-04-07T18:15:47.836Z] CLI Version:   7.16.1
+[debug] [2020-04-07T18:15:47.836Z] Platform:      linux
+[debug] [2020-04-07T18:15:47.836Z] Node Version:  v13.3.0
+[debug] [2020-04-07T18:15:47.836Z] Time:          Tue Apr 07 2020 22:15:47 GMT+0400 (Mauritius Standard Time)
+[debug] [2020-04-07T18:15:47.836Z] ----------------------------------------------------------------------
+[debug] [2020-04-07T18:15:47.836Z] 
+[debug] [2020-04-07T18:15:47.846Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-07T18:15:47.846Z] > authorizing via signed-in user
+[debug] [2020-04-07T18:15:47.846Z] [iam] checking project smart-parking-701f0 for permissions ["firebase.projects.get"]
+[debug] [2020-04-07T18:15:47.847Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-04-07T18:15:47.848Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-07T18:15:48.305Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T18:15:48.317Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-parking-701f0:testIamPermissions  
+
+[debug] [2020-04-07T18:15:50.273Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T18:15:50.274Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/smart-parking-701f0  
+ 
+[debug] [2020-04-07T18:15:50.986Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/run/media/shahanah/Files/Dissertation/Final'...
+[info] 
+[debug] [2020-04-07T18:15:50.993Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/smart-parking-701f0/webApps/-/config  
+ 
+[debug] [2020-04-07T18:15:52.042Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: SmartParkAdmin
+[info] ✔  hosting: Local server: http://localhost:5000
+[debug] [2020-04-07T19:19:55.943Z] ----------------------------------------------------------------------
+[debug] [2020-04-07T19:19:55.945Z] Command:       /usr/bin/node /usr/bin/firebase deploy
+[debug] [2020-04-07T19:19:55.945Z] CLI Version:   7.16.1
+[debug] [2020-04-07T19:19:55.945Z] Platform:      linux
+[debug] [2020-04-07T19:19:55.945Z] Node Version:  v13.3.0
+[debug] [2020-04-07T19:19:55.945Z] Time:          Tue Apr 07 2020 23:19:55 GMT+0400 (Mauritius Standard Time)
+[debug] [2020-04-07T19:19:55.945Z] ----------------------------------------------------------------------
+[debug] [2020-04-07T19:19:55.945Z] 
+[debug] [2020-04-07T19:19:55.951Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-07T19:19:55.951Z] > authorizing via signed-in user
+[debug] [2020-04-07T19:19:55.952Z] [iam] checking project smart-parking-701f0 for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2020-04-07T19:19:55.954Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-04-07T19:19:55.954Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-07T19:19:56.402Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:19:56.407Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/smart-parking-701f0:testIamPermissions  
+
+[debug] [2020-04-07T19:19:58.346Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:19:58.352Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/smart-parking-701f0  
+ 
+[debug] [2020-04-07T19:19:59.050Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'smart-parking-701f0'...
+[info] 
+[info] i  deploying hosting
+[debug] [2020-04-07T19:19:59.054Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions  
+
+[debug] [2020-04-07T19:20:01.957Z] <<< HTTP RESPONSE 200
+[info] i  hosting[smart-parking-701f0]: beginning deploy...
+[info] i  hosting[smart-parking-701f0]: found 4821 files in SmartParkAdmin
+[debug] [2020-04-07T19:20:03.311Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220:populateFiles  
+ <request body omitted>
+[debug] [2020-04-07T19:20:03.540Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220:populateFiles  
+ <request body omitted>
+[debug] [2020-04-07T19:20:03.713Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220:populateFiles  
+ <request body omitted>
+[debug] [2020-04-07T19:20:03.893Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220:populateFiles  
+ <request body omitted>
+[debug] [2020-04-07T19:20:04.065Z] [hosting] hash cache [U21hcnRQYXJrQWRtaW4] stored for 4821 files
+[debug] [2020-04-07T19:20:04.066Z] [hosting][hash queue][FINAL]
+[debug] [2020-04-07T19:20:04.066Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220:populateFiles  
+ <request body omitted>
+[debug] [2020-04-07T19:20:07.400Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:07.727Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:09.282Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:09.293Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:09.303Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:09.305Z] [hosting][populate queue][FINAL]
+[debug] [2020-04-07T19:20:09.305Z] [hosting] uploads queued: 31
+[debug] [2020-04-07T19:20:10.959Z] [hosting][upload queue][FINAL]
+[info] ✔  hosting[smart-parking-701f0]: file upload complete
+[debug] [2020-04-07T19:20:10.960Z] [hosting] deploy completed after 9002ms
+[debug] [2020-04-07T19:20:11.357Z] [
+  {
+    "config": {
+      "public": "SmartParkAdmin",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "site": "smart-parking-701f0"
+    },
+    "site": "smart-parking-701f0",
+    "version": "sites/smart-parking-701f0/versions/61cbdf81bc100220"
+  }
+]
+[info] i  hosting[smart-parking-701f0]: finalizing version...
+[debug] [2020-04-07T19:20:11.359Z] >>> HTTP REQUEST PATCH https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/versions/61cbdf81bc100220?updateMask=status  
+
+[debug] [2020-04-07T19:20:13.379Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:13.380Z] [hosting] finalized version for smart-parking-701f0:
+[info] ✔  hosting[smart-parking-701f0]: version finalized
+[info] i  hosting[smart-parking-701f0]: releasing new version...
+[debug] [2020-04-07T19:20:13.382Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/smart-parking-701f0/releases?version_name=sites/smart-parking-701f0/versions/61cbdf81bc100220  
+
+[debug] [2020-04-07T19:20:15.195Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-07T19:20:15.196Z] [hosting] release:
+[info] ✔  hosting[smart-parking-701f0]: release complete
+[info] 
+[info] ✔  Deploy complete!
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/smart-parking-701f0/overview
+[info] Hosting URL: https://smart-parking-701f0.firebaseapp.com
