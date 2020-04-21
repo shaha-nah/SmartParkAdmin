@@ -284,92 +284,98 @@ $(async function () {
                 await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
                     reservationSnapshot.forEach(function(doc){
                         var reservationDate = doc.data().reservationDate.toDate();
+                        
                         if (reservationDate.getMonth() == currentMonth){
                             count = count + 1;
                         }
                     });
                 });
                 reservations.push(count);
+                var options = {
+                    type: 'line',
+                    data: {
+                      labels: parkingSlots,
+                      datasets: [{
+                          label: 'Reservations',
+                          data: reservations,
+                          borderWidth: 2,
+                          fill: false,
+                          backgroundColor: chartColors[0],
+                          borderColor: chartColors[0],
+                          borderWidth: 0
+                        }
+                      ]
+                    },
+                    options: {
+                      scales: {
+                        yAxes: [{
+                          ticks: {
+                            reverse: false
+                          }
+                        }]
+                      },
+                      fill: false,
+                      legend: false
+                    }
+                  }
+              
+                  var ctx = document.getElementById('chartjs-staked-line-chart').getContext('2d');
+                  new Chart(ctx, options);
             });
         });
 
 
-        var options = {
-          type: 'line',
-          data: {
-            labels: parkingSlots,
-            datasets: [{
-                label: 'Reservations',
-                data: reservations,
-                borderWidth: 2,
-                fill: false,
-                backgroundColor: chartColors[0],
-                borderColor: chartColors[0],
-                borderWidth: 0
-              }
-            ]
-          },
-          options: {
-            scales: {
-              yAxes: [{
-                ticks: {
-                  reverse: false
-                }
-              }]
-            },
-            fill: false,
-            legend: false
-          }
-        }
-    
-        var ctx = document.getElementById('chartjs-staked-line-chart').getContext('2d');
-        new Chart(ctx, options);
+        
     }
 
     if ($("#chartjs-bar-chart").length) {
 
-        var parkingSlots = new Array();
+        var parkingBSlots = new Array();
         var parkingBReservations = new Array();
         
         var currentDate = new Date();
-        var currentMonth = currentDate.getMonth();
+        var currentMonth = currentDate.getMonth() - 1;
 
         // // parkingSlots = ["A1", "A2", "A3", "A4", "A5", "A5", "A6", "A7", "A8", "A9", "A10"];
         await db.collection("parkingSlot").where("parkingLotID", "==", "B").get().then(function(querySnapshot){
             querySnapshot.forEach(async function(doc){
-                parkingSlots.push(doc.id)
+                parkingBSlots.push(doc.id)
                 //get reservations
                 var count = 0;
                 await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
                     reservationSnapshot.forEach(function(doc){
                         var reservationDate = doc.data().reservationDate.toDate();
+                        console.log(reservationDate.getMonth());
+                        console.log(currentMonth);
                         if (reservationDate.getMonth() == currentMonth){
                             count = count + 1;
+                            console.log("boo")
                         }
                     });
                 });
+                parkingBReservations.push(count);
+                var BarData = {
+                    labels: parkingBSlots,
+                    datasets: [{
+                      label: '# of Reservations',
+                      data: parkingBReservations,
+                      backgroundColor: chartColors,
+                      borderColor: chartColors,
+                      borderWidth: 0
+                    }]
+                  };
+                  var barChartCanvas = $("#chartjs-bar-chart").get(0).getContext("2d");
+                  var barChart = new Chart(barChartCanvas, {
+                    type: 'bar',
+                    data: BarData,
+                    options: {
+                      legend: false
+                    }
+                  });
             });
         });
 
-        console.log(parkingBReservations)
-        var BarData = {
-          labels: parkingSlots,
-          datasets: [{
-            label: '# of Reservations',
-            data: parkingBReservations,
-            backgroundColor: chartColors,
-            borderColor: chartColors,
-            borderWidth: 0
-          }]
-        };
-        var barChartCanvas = $("#chartjs-bar-chart").get(0).getContext("2d");
-        var barChart = new Chart(barChartCanvas, {
-          type: 'bar',
-          data: BarData,
-          options: {
-            legend: false
-          }
-        });
+        
       }
 
     if ($("#cpu-performance").length) {

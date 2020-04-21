@@ -2,7 +2,7 @@ async function getAllVehicles(){
     await db.collection("vehicle").get().then(snapshot => {
         snapshot.forEach(async function(doc){
             var userID = doc.data().userID;
-            var plateNumber = doc.data().vehiclePlateNumber;
+            var plateNumber = doc.data().vehiclePlateNumber.toString();
             await db.collection("user").doc(userID).get().then(function(snapshotUser){
                 table.row.add(
                     [

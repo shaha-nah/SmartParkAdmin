@@ -91,3 +91,50 @@ if(forgotPasswordForm != null){
         });
     });
 }
+// alert("Please enter all the fields");
+// alert("Current password is incorrect");
+// alert("Passwords do not match!");
+// alert("Password should have a minimum of 6 characters");
+// alert("Password successfully changed!");
+const changePasswordForm = document.querySelector("#formPassword");
+if (changePasswordForm != null){
+    
+    changePasswordForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const currentPassword = changePasswordForm["txtCurrentPassword"].value;
+        const newPassword = changePasswordForm["txtNewPassword"].value;
+        const confirmPassword = changePasswordForm["txtConfirmPassword"].value;
+
+        if (currentPassword == "" || newPassword == "" || confirmPassword == ""){
+            alert("Please fill all the fields");
+        }
+        else{
+            if (newPassword.length < 6){
+                alert("Password should have a minimum of 6 characters");
+            }
+            else{
+                if (newPassword != confirmPassword){
+                    alert("Passwords do not match!");
+                }
+                else{
+                    auth.onAuthStateChanged(async function(user){
+                        if (user){
+                            await db.collection("user").doc(user.uid).get().then(function(documentSnapshot){
+                                var email = documentSnapshot.data().userEmail;
+
+                                auth.signInWithEmailAndPassword(email, currentPassword).then(cred => {
+                                    user.updatePassword(newPassword).then(() => {
+                                        alert("Password successfully changed!");
+                                    });
+                                }).catch(err => {
+                                    alert("Current password is incorrect");
+                                });
+                            });
+                        }
+                    });
+                }
+            }
+        }
+    });
+}
