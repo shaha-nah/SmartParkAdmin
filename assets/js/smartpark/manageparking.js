@@ -1,4 +1,4 @@
-$(document).ready(async function(){
+$(document).ready(async function getParkingLots(){
     var select = document.getElementById("drpParkingLot");
     await db.collection("parkingLot").get().then(snapshot =>{
         snapshot.forEach(doc =>{
@@ -10,7 +10,7 @@ $(document).ready(async function(){
     });
 });
 
-$("select").change(async function(){
+$("select").change(async function getFees(){
     var parkingLot = $(this).children("option:selected").val();
     await db.collection("parkingLot").doc(parkingLot).get().then(doc =>{
         $("#txtNormal").val(doc.data().parkingLotNormalRate);
@@ -18,18 +18,10 @@ $("select").change(async function(){
         $("#txtPenalty").val(doc.data().parkingLotPenaltyFee);
         $("#txtCancellation").val(doc.data().parkingLotCancellationFee);
         $("#txtExpiration").val(doc.data().parkingLotExpirationFee);
-        if (doc.data().reserve == false){
-            $("#txtCancellation").prop("disabled", true);
-            $("#txtExpiration").prop("disabled", true);
-        }
-        else{
-            $("#txtCancellation").prop("disabled", false);
-            $("#txtExpiration").prop("disabled", false);
-        }
     });
 });
 
-$("#formPrice").submit(async function(e){
+$("#formPrice").submit(async function updateRates(e){
     e.preventDefault();
     var parkingLot = $("select").children("option:selected").val();
     if (parkingLot == "Choose a Parking Lot"){

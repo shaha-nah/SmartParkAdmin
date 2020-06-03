@@ -1,4 +1,4 @@
-$(document).ready(async function(){
+$(document).ready(async function getUserEmails(){
     var select = document.getElementById("drpEmail");
     await db.collection("user").where("userRole", "==", "normal").get().then(snapshot =>{
         snapshot.forEach(doc =>{
@@ -10,7 +10,7 @@ $(document).ready(async function(){
     });
 });
 
-$("#formRecharge").submit(async function(e){
+$("#formRecharge").submit(async function recharge(e){
     e.preventDefault();
     
     var user = $("select").children("option:selected").val();

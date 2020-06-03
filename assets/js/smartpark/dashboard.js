@@ -51,7 +51,7 @@ catch(err){
     console.log("Error getting document", err);
 }
 
-$(async function () {
+$(async function obtainStatistics() {
     "use strict";
     var StatsLineOptions = {
         scales: {
@@ -274,8 +274,8 @@ $(async function () {
     if ($("#chartjs-staked-line-chart").length) {
         var parkingSlots = new Array();
         var reservations = new Array();
-        var currentDate = new Date();
-        var currentMonth = currentDate.getMonth();
+        var currentDateA = new Date();
+        var currentMonth = currentDateA.getMonth();
         await db.collection("parkingSlot").where("parkingLotID", "==", "A").get().then(function(querySnapshot){
             querySnapshot.forEach(async function(doc){
                 parkingSlots.push(doc.id)
@@ -286,7 +286,7 @@ $(async function () {
                         var reservationDate = doc.data().reservationDate.toDate();
                         
                         if (reservationDate.getMonth() == currentMonth){
-                            count = count + 1;
+                            count = count + 1
                         }
                     });
                 });
@@ -323,9 +323,61 @@ $(async function () {
                   new Chart(ctx, options);
             });
         });
+    }
 
-
-        
+    if ($("#chartjs-staked-line-chart2").length) {
+        var parkingSlotsB = new Array();
+        var reservationsB = new Array();
+        var currentDate = new Date();
+        var currentMonth = currentDate.getMonth();
+        await db.collection("parkingSlot").where("parkingLotID", "==", "B").get().then(function(querySnapshot){
+            querySnapshot.forEach(async function(doc){
+                parkingSlotsB.push(doc.id)
+                //get reservations
+                var count = 0;
+                await db.collection("reservation").where("parkingSlotID", "==", doc.id).get().then(function(reservationSnapshot){
+                    reservationSnapshot.forEach(function(doc){
+                        var reservationDate = doc.data().reservationDate.toDate();
+     
+                        
+                        if (reservationDate.getMonth() == currentMonth){
+                            count = count + 1;
+                        }
+                    });
+                });
+                reservationsB.push(count);
+                var options = {
+                    type: 'line',
+                    data: {
+                      labels: parkingSlotsB,
+                      datasets: [{
+                          label: 'Reservations',
+                          data: reservationsB,
+                          borderWidth: 2,
+                          fill: false,
+                          backgroundColor: chartColors[0],
+                          borderColor: chartColors[0],
+                          borderWidth: 0
+                        }
+                      ]
+                    },
+                    options: {
+                      scales: {
+                        yAxes: [{
+                          ticks: {
+                            reverse: false
+                          }
+                        }]
+                      },
+                      fill: false,
+                      legend: false
+                    }
+                  }
+              
+                  var ctx = document.getElementById('chartjs-staked-line-chart2').getContext('2d');
+                  new Chart(ctx, options);
+            });
+        });
     }
 
     if ($("#chartjs-bar-chart").length) {
@@ -448,3 +500,118 @@ $(async function () {
     }
 });
 
+
+$(function drawParkingA(){
+    var usageA = document.getElementById("usageA")
+    db.collection("parkingSlot").where("parkingLotID", "==", "A").onSnapshot(function (querySnapshot){
+        parkingLot = [];
+        $("#rowA1").children().remove();
+        $("#rowA2").children().remove();
+        querySnapshot.forEach(function (document){
+            parkingLot.push([document.id, document.data().available])
+        });
+        //have to sort
+        
+        var divA = document.getElementById("rowA1");
+        var divB = document.getElementById("rowA2");
+
+        for (var i = 0; i< (parkingLot.length)/2; i++){
+            var divA = document.getElementById("rowA1");
+            var div = document.createElement("div")
+            div.className ="slotUpper"
+            // if ( i == (parkingLot.length)/2 -1){
+            //     div.style.borderWidth="5px"
+            // }
+            if (parkingLot[i][1] == true){
+                div.style.borderColor = "#2af598"
+            }
+            else{
+                div.style.borderColor = "#fa709a"
+            }
+            // div.style.background="#ff77ee"
+            div.innerHTML = parkingLot[i][0]
+            divA.appendChild(div)
+        }
+
+        for (var i = (parkingLot.length)/2 ; i <parkingLot.length; i++){
+            var div = document.createElement("div")
+            div.className ="slotLower"
+            // if ( i == parkingLot.length -1){
+            //     div.style.borderRightStyle="solid"
+            // }
+            if (parkingLot[i][1] == true){
+                div.style.borderColor = "#2af598"
+            }
+            else{
+                div.style.borderColor = "#fa709a"
+            }
+            div.innerHTML = parkingLot[i][0]
+            divB.appendChild(div)
+        }
+
+        countA = 0;
+        for (var i = 0; i < parkingLot.length; i++){
+            if (parkingLot[i][1] == true){
+                countA++;
+            }
+        }
+        usageA.innerHTML = "Usage: " + ((countA / parkingLot.length) * 100).toFixed(0)+ "%"
+    });
+});
+
+$(function drawParkingB(){
+    db.collection("parkingSlot").where("parkingLotID", "==", "B").onSnapshot(function (querySnapshot){
+        var usageB = document.getElementById("usageB");
+        parkingLot = [];
+        $("#rowB1").children().remove();
+        $("#rowB2").children().remove();
+        querySnapshot.forEach(function (document){
+            parkingLot.push([document.id, document.data().available])
+        });
+        //have to sort
+        
+        var divB1 = document.getElementById("rowB1");
+        var divB2 = document.getElementById("rowB2");
+
+        for (var i = 0; i< (parkingLot.length)/2; i++){
+            var div = document.createElement("div")
+            div.className ="slotUpper"
+            // if ( i == (parkingLot.length)/2 -1){
+            //     div.style.borderRightStyle="solid"
+            // }
+            if (parkingLot[i][1] == true){
+                div.style.borderColor = "#2af598"
+            }
+            else{
+                div.style.borderColor = "#fa709a"
+            }
+            // div.style.background="#ff77ee"
+            div.innerHTML = parkingLot[i][0]
+            divB1.appendChild(div)
+        }
+
+        for (var i = (parkingLot.length)/2 ; i <parkingLot.length; i++){
+            var div = document.createElement("div")
+            div.className ="slotLower"
+            // if ( i == parkingLot.length -1){
+            //     div.style.borderRightStyle="solid"
+            // }
+            if (parkingLot[i][1] == true){
+                div.style.borderColor = "#2af598"
+            }
+            else{
+                div.style.borderColor = "#fa709a"
+            }
+            div.innerHTML = parkingLot[i][0]
+            divB2.appendChild(div)
+        }
+
+        countB = 0;
+        for (var i = 0; i < parkingLot.length; i++){
+            if (parkingLot[i][1] == true){
+                countB++;
+            }
+        }
+        usageB.innerHTML = "Usage: " + ((countB / parkingLot.length) * 100).toFixed(0)+ "%"
+    });
+});

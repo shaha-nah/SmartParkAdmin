@@ -179,7 +179,9 @@
     z-index: 1; }
 
 /* Sidebar */
+
 .sidebar {
+  overflow: auto;
   position: relative;
   display: block;
   height: 100%;

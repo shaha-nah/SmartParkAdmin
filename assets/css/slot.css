@@ -1,0 +1,25 @@
+.slotUpper{
+    border-top-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    padding: 3vw;
+    padding-top:14%;
+    margin-bottom: 60px;
+    width:25%;
+    text-align: center;
+    vertical-align: 50px;
+    height: 150px;
+    border-color: rgba(52, 73, 94, 1.0);
+}
+
+.slotLower{
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    padding: 2vw;
+    padding-top:14%;
+    width: 25%;
+    text-align: center;
+    height: 150px;
+    border-color: rgba(52, 73, 94, 1.0);
+}
