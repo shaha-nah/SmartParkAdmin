@@ -1,6 +1,6 @@
 async function getAllUsers(){
     var table = $("#example");
-    await db.collection("user").where("userRole", "==", "normal").get().then(snapshot => {
+    await db.collection("user").where("userRole", "==", "normal").where("markAsDeleted", "==", false).get().then(snapshot => {
         snapshot.forEach(async function(doc){
             var userID = doc.id;
             var countVehicle = 0;

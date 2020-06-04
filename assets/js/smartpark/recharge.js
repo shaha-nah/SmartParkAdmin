@@ -1,6 +1,6 @@
 $(document).ready(async function getUserEmails(){
     var select = document.getElementById("drpEmail");
-    await db.collection("user").where("userRole", "==", "normal").get().then(snapshot =>{
+    await db.collection("user").where("userRole", "==", "normal").where("markAsDeleted", "==", false).get().then(snapshot =>{
         snapshot.forEach(doc =>{
             var option = document.createElement("option");
             option.text=doc.data().userEmail;

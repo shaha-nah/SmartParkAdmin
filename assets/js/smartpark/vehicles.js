@@ -19,7 +19,7 @@ async function getAllVehicles(){
             searching: true,
             columns: [
                 { title: "Vehicle Plate Number"},
-                { title: "Name"},
+                { title: "Owner"},
                 { title: "Email"},
                 { title: "Phone Number"}
             ],

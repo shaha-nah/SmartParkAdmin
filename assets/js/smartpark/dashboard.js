@@ -37,7 +37,7 @@ catch(err){
 //get total users
 async function getTotalUsers(){
     var totalUsers = 0;
-    await db.collection("user").where("userRole", "==", "normal").get().then(function(querySnapshot){
+    await db.collection("user").where("userRole", "==", "normal").where("markAsDeleted", "==", false).get().then(function(querySnapshot){
         querySnapshot.forEach(function(doc){
             totalUsers = totalUsers + 1;
         });
